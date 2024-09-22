@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { pool } = require('../lib/pool');
+const { passport } = require('../lib/passport');
 
 router.post('/', 
     passport.authenticate('local', { 
