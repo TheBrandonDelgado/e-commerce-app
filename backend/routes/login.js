@@ -9,18 +9,18 @@ router.post('/',
         failureMessage: true
     }), 
     (req, res) => {
-        res.redirect('/~' + req.user.username);
+        res.redirect('/~' + req.user.email);
     }
 );
 
 router.post('/register', async (req, res) => {
-    const { username, password } = req.body;
-    const { rows: users } = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
+    const { email, password } = req.body;
+    const { rows: users } = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
 
     if (users.length > 0) {
         res.status(400).send('User already exists');
     } else {
-        users.push({ username, password });
+        users.push({ email, password });
         res.status(200).send('User created');
     }
     pool.end();
