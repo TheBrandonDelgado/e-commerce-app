@@ -1,9 +1,10 @@
 var passport = require('passport');
 var LocalStrategy = require('passport-local');
 var crypto = require('crypto');
+const { pool } = require('./pool');
 
 passport.use(new LocalStrategy(function verify(username, password, cb) {
-  db.get('SELECT * FROM users WHERE username = ?', [ username ], function(err, user) {
+  pool.get('SELECT * FROM users WHERE username = ?', [ username ], function(err, user) {
     if (err) { return cb(err); }
     if (!user) { return cb(null, false, { message: 'Incorrect username or password.' }); }
     
